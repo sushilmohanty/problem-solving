@@ -128,4 +128,62 @@ object StringProblems {
     revString.toString()
   }
 
+
+  /**
+    * Get the first non repeating character
+    *
+    * @param str
+    * @return
+    */
+  def getFirstNonRepeatingChar(str: String): Char = {
+    val strArray = str.toCharArray
+    val charMap = new mutable.LinkedHashMap[Char, Int]()
+    var nonRepeatingChar = " ".charAt(0)
+    strArray.foreach(char => {
+      if (charMap.contains(char)) {
+        val count = charMap.get(char).get
+        charMap.put(char, count + 1)
+      } else {
+        charMap.put(char, 1)
+      }
+    })
+    breakable {
+      charMap.foreach(entry => {
+        if (entry._2 == 1) {
+          nonRepeatingChar = entry._1
+          break
+        }
+      })
+    }
+    nonRepeatingChar
+  }
+
+  /**
+    * Get run length encoding
+    * eg : aaaabbccccdddzzz = a4b2c4d3z3
+    *
+    *
+    * @param str
+    * @return
+    */
+  def runLengthEncoding(str: String): String = {
+    val charMap = new mutable.LinkedHashMap[Char, Int]()
+    var outputStr = new mutable.StringBuilder()
+
+    for (i <- 0 to str.length -1) {
+      val ch = str.charAt(i)
+      if (charMap.contains(ch)) {
+        val count = charMap.get(ch).get
+        charMap.put(ch, count + 1)
+      } else {
+        charMap.put(ch, 1)
+      }
+    }
+    charMap.foreach(entry => {
+      outputStr.append(entry._1).append(entry._2)
+    })
+    outputStr.toString
+  }
+
+
 }
