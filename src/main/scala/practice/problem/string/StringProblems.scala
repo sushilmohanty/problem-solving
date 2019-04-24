@@ -185,5 +185,26 @@ object StringProblems {
     outputStr.toString
   }
 
+  /**
+    * implement toLowerCase
+    *
+    * @param str
+    */
+  def toLowerCase(str : String): String = {
+    var outputStr = new mutable.StringBuilder()
+    for (i <- 0 to str.length -1) {
+      val char = str.charAt(i)
+      val charAsciiValue = char.toInt
+      // A = 65 and Z = 90
+      if (charAsciiValue >= 65 && charAsciiValue <= 90) {
+        // A - a = 34
+        val charInLower = (charAsciiValue + 32).toChar
+        outputStr.append(charInLower)
+      } else {
+        outputStr.append(char)
+      }
+    }
+    outputStr.toString()
+  }
 
 }
