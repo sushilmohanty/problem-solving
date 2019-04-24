@@ -1,6 +1,7 @@
 package practice.problem.string
 
 import scala.collection.mutable
+import scala.collection.mutable._
 import scala.util.control.Breaks.{break, breakable}
 
 
@@ -96,6 +97,35 @@ object StringProblems {
   }
 
 
+  /**
+    * Reverse words of a sentence
+    *
+    * @param str
+    * @return
+    */
+  def reverseWordsOfSentence(str : String) : String = {
+    val wordsArray = str.split(" ")
+    val revString = new mutable.StringBuilder()
+    for ( i <- wordsArray.length -1 to 0 by -1) {
+      revString.append(wordsArray(i) + " ")
+    }
+    revString.toString().trim
+  }
 
+
+  /**
+    * Reverse the chars of a String
+    *
+    * @param str
+    * @return
+    */
+  def reverseCharsOfString(str : String) : String = {
+    val charArray = str.toCharArray
+    val revString = new mutable.StringBuilder()
+    for (i <- charArray.length -1 to 0 by -1) {
+      revString.append(charArray(i))
+    }
+    revString.toString()
+  }
 
 }
