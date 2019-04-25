@@ -284,4 +284,45 @@ object StringProblems {
     shortest
   }
 
+  /**
+    * Check if two Strings are anagrams
+    * All chars and their count must match
+    *
+    * eg : heater -> reheat
+    *
+    * @param str1
+    * @param str2
+    * @return
+    */
+  def checkAnagram(str1 : String, str2 : String) : Boolean = {
+   val isAnagram = true
+    if (str1.length != str2.length) {
+      return false
+    }
+    val charTable = new mutable.HashMap[Char, Int]()
+    // Iterate over the first array and populate hashtable
+    for (i <- 0 to str1.length -1) {
+      if (charTable.contains(str1(i))) {
+        var count = charTable.get(str1(i)).get
+        charTable.put(str1(i), count + 1)
+      } else {
+        charTable.put(str1(i), 1)
+      }
+    }
+    // iterate over second String and substract count
+    for (i <- 0 to str2.length -1) {
+      if (charTable.contains(str2(i))) {
+        var count = charTable.get(str1(i)).get
+        charTable.put(str1(i), count - 1)
+      }
+    }
+    // Check idf any count is non zero
+    charTable.foreach(entry => {
+      if (entry._2 != 0 ) {
+        return false
+      }
+    })
+    isAnagram
+  }
+
 }
