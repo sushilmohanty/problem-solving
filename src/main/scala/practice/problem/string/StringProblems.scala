@@ -104,7 +104,7 @@ object StringProblems {
     * @return
     */
   def reverseWordsOfSentence(str : String) : String = {
-    val wordsArray = str.split(" ")
+    val wordsArray = str.split("\\s+")
     val revString = new mutable.StringBuilder()
     for ( i <- wordsArray.length -1 to 0 by -1) {
       revString.append(wordsArray(i) + " ")
@@ -197,7 +197,7 @@ object StringProblems {
       val charAsciiValue = char.toInt
       // A = 65 and Z = 90
       if (charAsciiValue >= 65 && charAsciiValue <= 90) {
-        // A - a = 34
+        // A - a = 32
         val charInLower = (charAsciiValue + 32).toChar
         outputStr.append(charInLower)
       } else {
@@ -205,6 +205,83 @@ object StringProblems {
       }
     }
     outputStr.toString()
+  }
+
+
+  /**
+    * Get no of unique email addresses
+    *
+    * @param emails
+    * @return
+    */
+  def numUniqueEmails(emails: Array[String]): Int = {
+    val uniqueSet = new mutable.HashSet[String]()
+    emails.foreach(email => {
+      var finalName = ""
+      val domain = email.substring(email.indexOf("@"))
+      if (email.contains("@")) {
+        val name = email.substring(0, email.indexOf("@")).replaceAll("\\.", "")
+        if (name.contains("+")) {
+          finalName = name.substring(0, name.indexOf("+"))
+        } else {
+          finalName = name
+        }
+        println(finalName + domain)
+        uniqueSet.add(finalName + domain)
+      }
+    })
+      uniqueSet.size
+  }
+
+
+  /**
+    * Find the smallest window in first String matching all characters in
+    * second String.
+    *
+    * @param str1
+    * @param str2
+    * @return
+    */
+  def getSmallestWindowContainsAllChars(str1 : String, str2 : String) : String = {
+    val smallLen = str2.length
+    val lookupTable = new mutable.LinkedHashSet[String]()
+    val smallestWinLen = 0
+    // Get all substrings
+    for(i <- 0 until  str1.length) {
+      for(j <- i+1 to str1.length) {
+        val subStr = str1.substring(i, j)
+        // Consider substrings with length >= pattern
+        if (subStr.length >= smallLen) {
+          // Create a hashtable and add the stbstring elements
+          // Check with matching string to ensure all chars present
+          val substrArr = subStr.toCharArray
+          var substrCharSet = new mutable.HashSet[Char]()
+          substrCharSet = substrCharSet ++ substrArr
+          var matchCount = 0;
+          for (i <- 0 to str2.length -1) {
+            if (substrCharSet.contains(str2(i))) {
+              matchCount += 1
+            }
+          }
+          // If all chars present match count will be equal to length
+          if (matchCount == str2.length) {
+            lookupTable.add(subStr)
+          }
+
+        }
+      }
+    }
+    // From all eligible substrings find the smallest one
+    var shortest = ""
+    if (!lookupTable.isEmpty) {
+      shortest = lookupTable.toList(0)
+      lookupTable.foreach(element => {
+        if (element.length < shortest.length) {
+          shortest = element
+        }
+      })
+    }
+    shortest
   }
 
 }
