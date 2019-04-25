@@ -325,4 +325,27 @@ object StringProblems {
     isAnagram
   }
 
+  /**
+    * Reverse letters of a String
+    *
+    * Input: "Let's take LeetCode contest"
+    * Output: "s'teL ekat edoCteeL tsetnoc"
+    *
+    *
+    * @param str
+    * @return
+    */
+  def reverseWordsInString(s : String) : String = {
+    import scala.collection.mutable
+    val words = s.split("\\s+")
+    val finalString = new mutable.StringBuilder()
+    words.foreach(word => {
+      val reversedLetters = new mutable.StringBuilder()
+      for(i <- word.length - 1 to 0 by -1) {
+        reversedLetters.append(word(i))
+      }
+      finalString.append(reversedLetters).append(" ")
+    })
+    finalString.toString().trim
+  }
 }
